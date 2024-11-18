@@ -30,43 +30,52 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import org.harundemir.taskmanager.features.addNewTask.viewmodels.AddNewTaskViewModel
 
 @Composable
 fun AddNewTaskScreen(navController: NavController?) {
+    val addNewTaskViewModel: AddNewTaskViewModel = viewModel()
+
     Scaffold(
         topBar = {
             AddNewTaskAppBar(navController)
         }, modifier = Modifier.fillMaxSize()
     ) { innerPadding ->
-        AddNewTaskBody(innerPadding)
+        AddNewTaskBody(innerPadding, navController, addNewTaskViewModel)
     }
 }
 
 @Composable
 fun AddNewTaskAppBar(navController: NavController?) {
-    CenterAlignedTopAppBar(
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = MaterialTheme.colorScheme.primaryContainer,
-            titleContentColor = MaterialTheme.colorScheme.primary,
-        ),
-        navigationIcon = {
-            IconButton(onClick = { navController?.navigateUp() }) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    tint = MaterialTheme.colorScheme.primary,
-                    contentDescription = "Go Back"
-                )
-            }
-        },
-        title = { Text(text = "New Task") }
-    )
+    CenterAlignedTopAppBar(colors = TopAppBarDefaults.topAppBarColors(
+        containerColor = MaterialTheme.colorScheme.primaryContainer,
+        titleContentColor = MaterialTheme.colorScheme.primary,
+    ), navigationIcon = {
+        IconButton(onClick = { navController?.navigateUp() }) {
+            Icon(
+                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                tint = MaterialTheme.colorScheme.primary,
+                contentDescription = "Go Back"
+            )
+        }
+    }, title = { Text(text = "New Task") })
 }
 
 @Composable
-fun AddNewTaskBody(innerPadding: PaddingValues) {
+fun AddNewTaskBody(
+    innerPadding: PaddingValues,
+    navController: NavController?,
+    viewModel: AddNewTaskViewModel = viewModel()
+) {
+    val context = LocalContext.current
+    val title = viewModel.title.value
+    val description = viewModel.description.value
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -74,32 +83,44 @@ fun AddNewTaskBody(innerPadding: PaddingValues) {
         verticalArrangement = Arrangement.SpaceBetween
     ) {
         Column {
-            AddNewTaskTextField(label = "Title")
-            AddNewTaskTextField(label = "Description", isMultiline = true)
+            AddNewTaskTextField(label = "Title", text = title, onTextChanged = {
+                viewModel.updateTitle(it)
+            })
+            AddNewTaskTextField(
+                label = "Description",
+                text = description,
+                isMultiline = true,
+                onTextChanged = {
+                    viewModel.updateDescription(it)
+                },
+            )
         }
-        AddNewTaskSaveButton()
+        AddNewTaskSaveButton {
+            if (viewModel.addNewTask(context, title, description)) {
+                navController?.navigateUp()
+            }
+        }
     }
 }
 
 @Composable
-fun AddNewTaskTextField(label: String, isMultiline: Boolean = false) {
-    var text = remember { mutableStateOf("") }
+fun AddNewTaskTextField(
+    label: String, isMultiline: Boolean = false, text: String, onTextChanged: (String) -> Unit
+) {
     var isFocused = remember { mutableStateOf(false) }
 
     TextField(
-        value = text.value,
-        onValueChange = { text.value = it },
+        label = { Text(text = label) },
+        value = text,
+        onValueChange = onTextChanged,
         modifier = Modifier
             .fillMaxWidth()
             .border(
                 BorderStroke(
                     width = if (isFocused.value) 2.dp else 0.dp,
-                    color =
-                    if (isFocused.value)
-                        MaterialTheme.colorScheme.primary
+                    color = if (isFocused.value) MaterialTheme.colorScheme.primary
                     else Color.Transparent
-                ),
-                shape = RoundedCornerShape(8.dp)
+                ), shape = RoundedCornerShape(8.dp)
             )
             .padding(8.dp)
             .onFocusChanged { isFocused.value = it.isFocused },
@@ -107,7 +128,6 @@ fun AddNewTaskTextField(label: String, isMultiline: Boolean = false) {
         minLines = if (isMultiline) 10 else 0,
         maxLines = if (isMultiline) 10 else 0,
         shape = RoundedCornerShape(8.dp),
-        label = { Text(text = label) },
         colors = TextFieldDefaults.colors(
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
@@ -117,12 +137,13 @@ fun AddNewTaskTextField(label: String, isMultiline: Boolean = false) {
 }
 
 @Composable
-fun AddNewTaskSaveButton() {
+fun AddNewTaskSaveButton(onClick: () -> Unit) {
     Button(
-        onClick = {},
+        onClick = onClick,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(8.dp), shape = RoundedCornerShape(8.dp)
+            .padding(8.dp),
+        shape = RoundedCornerShape(8.dp)
     ) { Text(text = "Save Task") }
 }
 
