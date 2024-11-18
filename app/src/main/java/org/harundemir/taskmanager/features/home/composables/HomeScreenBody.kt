@@ -14,6 +14,6 @@ fun HomeScreenBody(innerPadding: PaddingValues) {
         modifier = Modifier.fillMaxWidth(),
         contentPadding = innerPadding
     ) {
-        items(taskList) { item -> HomeScreenListTile(item) }
+        items(items = taskList, key = { it.id }) { item -> HomeScreenListTile(item) }
     }
 }

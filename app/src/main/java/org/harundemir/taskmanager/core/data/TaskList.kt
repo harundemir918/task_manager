@@ -1,9 +1,10 @@
 package org.harundemir.taskmanager.core.data
 
+import androidx.compose.runtime.mutableStateListOf
 import org.harundemir.taskmanager.core.models.Task
 import org.harundemir.taskmanager.core.util.DateUtils
 
-val taskList: MutableList<Task> = mutableListOf<Task>(
+val taskList = mutableStateListOf<Task>(
     Task(
         id = 1,
         title = "Sample task",
