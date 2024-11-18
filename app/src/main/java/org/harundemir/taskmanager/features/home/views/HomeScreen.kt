@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -31,6 +32,8 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import org.harundemir.taskmanager.core.data.taskList
+import org.harundemir.taskmanager.core.models.Task
 import org.harundemir.taskmanager.ui.theme.TaskManagerTheme
 
 @Composable
@@ -65,20 +68,13 @@ fun HomeScreenTaskList(innerPadding: PaddingValues) {
         modifier = Modifier.fillMaxWidth(),
         contentPadding = innerPadding
     ) {
-        item {
-            HomeScreenListTile()
-            HomeScreenListTile()
-            HomeScreenListTile()
-            HomeScreenListTile()
-            HomeScreenListTile()
-            HomeScreenListTile()
-        }
+        items(taskList) { item -> HomeScreenListTile(item) }
     }
 }
 
 @Composable
-fun HomeScreenListTile() {
-    var completed = remember { mutableStateOf(false) }
+fun HomeScreenListTile(task: Task) {
+    var completed = remember { mutableStateOf(task.isCompleted) }
     var decoration =
         remember {
             mutableStateOf(
@@ -102,19 +98,20 @@ fun HomeScreenListTile() {
         ) {
             Checkbox(checked = completed.value, onCheckedChange = {
                 completed.value = it
+                taskList.find { it.id == task.id}?.isCompleted = it
                 decoration.value = if (completed.value)
                     TextDecoration.LineThrough
                 else
                     TextDecoration.None
             })
             Text(
-                text = "Hey, this is a sample task",
+                text = task.title,
                 style = TextStyle(
                     textDecoration = decoration.value
                 )
             )
         }
-        Text(text = "13:15")
+        Text(text = task.createdAt)
     }
 }
 
