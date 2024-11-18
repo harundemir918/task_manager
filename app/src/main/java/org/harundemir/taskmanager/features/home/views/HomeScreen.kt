@@ -30,15 +30,16 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import org.harundemir.taskmanager.ui.theme.TaskManagerTheme
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(navController: NavController?) {
     Scaffold(
         topBar = {
             HomeScreenAppBar()
         },
-        floatingActionButton = { AddTaskButton() },
+        floatingActionButton = { AddTaskButton(navController) },
         modifier = Modifier.fillMaxSize()
     ) { innerPadding ->
         HomeScreenTaskList(innerPadding = innerPadding)
@@ -118,8 +119,10 @@ fun HomeScreenListTile() {
 }
 
 @Composable
-fun AddTaskButton() {
-    FloatingActionButton(onClick = {}) {
+fun AddTaskButton(navController: NavController?) {
+    FloatingActionButton(onClick = {
+        navController?.navigate("addNewTask")
+    }) {
         Icon(Icons.Filled.Add, "Add Task")
     }
 }
@@ -128,6 +131,6 @@ fun AddTaskButton() {
 @Composable
 fun HomeScreenPreview() {
     TaskManagerTheme {
-        HomeScreen()
+        HomeScreen(navController = null)
     }
 }

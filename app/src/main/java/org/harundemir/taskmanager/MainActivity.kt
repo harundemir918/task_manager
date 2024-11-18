@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import org.harundemir.taskmanager.features.home.views.HomeScreen
+import org.harundemir.taskmanager.core.navigation.AppNavigation
 import org.harundemir.taskmanager.ui.theme.TaskManagerTheme
 
 class MainActivity : ComponentActivity() {
@@ -13,7 +13,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             TaskManagerTheme {
-                HomeScreen()
+                AppNavigation()
             }
         }
     }
