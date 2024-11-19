@@ -42,7 +42,6 @@ fun HomeScreenListTile(task: Task) {
     var isRemoved = remember { mutableStateOf(false) }
     val dismissState = rememberSwipeToDismissBoxState(confirmValueChange = {
         if (it == SwipeToDismissBoxValue.EndToStart) {
-            homeViewModel.removeTask(task)
             isRemoved.value = true
             true
         } else {
