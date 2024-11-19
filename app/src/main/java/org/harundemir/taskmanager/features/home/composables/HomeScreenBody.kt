@@ -10,10 +10,14 @@ import org.harundemir.taskmanager.core.data.taskList
 
 @Composable
 fun HomeScreenBody(innerPadding: PaddingValues) {
-    LazyColumn(
-        modifier = Modifier.fillMaxWidth(),
-        contentPadding = innerPadding
-    ) {
-        items(items = taskList, key = { it.id }) { item -> HomeScreenListTile(item) }
+    if (taskList.isNotEmpty()) {
+        LazyColumn(
+            modifier = Modifier.fillMaxWidth(),
+            contentPadding = innerPadding
+        ) {
+            items(items = taskList, key = { it.id }) { item -> HomeScreenListTile(item) }
+        }
+    } else {
+        HomeScreenNoTasksText()
     }
 }
