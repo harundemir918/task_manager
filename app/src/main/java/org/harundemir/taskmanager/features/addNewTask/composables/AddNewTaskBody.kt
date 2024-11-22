@@ -23,6 +23,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -111,6 +112,7 @@ fun AddNewTaskBody(
                 }) {
                     Image(
                         painter = painterResource(R.drawable.baseline_alarm_24),
+                        colorFilter = ColorFilter.tint(color = MaterialTheme.colorScheme.primary),
                         contentDescription = "Pick Time"
                     )
                 }
