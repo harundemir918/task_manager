@@ -9,12 +9,14 @@ val taskList = mutableStateListOf<Task>(
         id = 1,
         title = "Sample task",
         description = "This is a sample task",
-        createdAt = DateUtils().getCurrentDate(),
+        createdAt = DateUtils().formatDateTimeToString(),
+        dueDate = DateUtils().formatDateTimeToString(),
     ),
     Task(
         id = 2,
         title = "New task",
         description = "This is a new task",
-        createdAt = DateUtils().getCurrentDate(),
+        createdAt = DateUtils().formatDateTimeToString(),
+        dueDate = DateUtils().formatDateTimeToString(),
     )
 )

@@ -105,7 +105,7 @@ fun HomeScreenListTile(task: Task) {
                                 )
                             )
                         }
-                        Text(text = task.createdAt)
+                        Text(text = task.dueDate)
                     }
                 }
 
