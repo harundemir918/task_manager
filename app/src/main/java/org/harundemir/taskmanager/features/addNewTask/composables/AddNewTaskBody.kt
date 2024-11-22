@@ -2,35 +2,23 @@
 
 package org.harundemir.taskmanager.features.addNewTask.composables
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import org.harundemir.taskmanager.R
 import org.harundemir.taskmanager.core.util.DateTimeEnum
 import org.harundemir.taskmanager.core.util.DateUtils
 import org.harundemir.taskmanager.features.addNewTask.viewmodels.AddNewTaskViewModel
@@ -66,9 +54,12 @@ fun AddNewTaskBody(
         verticalArrangement = Arrangement.SpaceBetween
     ) {
         Column {
-            AddNewTaskTextField(label = "Title", text = title, onTextChanged = {
-                viewModel.updateTitle(it)
-            })
+            AddNewTaskTextField(
+                label = "Title", text = title,
+                onTextChanged = {
+                    viewModel.updateTitle(it)
+                },
+            )
             AddNewTaskTextField(
                 label = "Description",
                 text = description,
@@ -77,46 +68,18 @@ fun AddNewTaskBody(
                     viewModel.updateDescription(it)
                 },
             )
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Column() {
-                    Text(text = "Due Date")
-                    Text(text = dueDate)
-                }
-                IconButton(onClick = {
+            AddNewTaskDueDate(
+                dueDate = dueDate,
+                onClick = {
                     openDatePickerModal.value = true
-                }) {
-                    Icon(
-                        Icons.Filled.DateRange,
-                        tint = MaterialTheme.colorScheme.primary,
-                        contentDescription = "Pick Date"
-                    )
-                }
-            }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Column() {
-                    Text(text = "Due Time")
-                    Text(text = dueTime)
-                }
-                IconButton(onClick = {
+                },
+            )
+            AddNewTaskDueTime(
+                dueTime = dueTime,
+                onClick = {
                     openTimePickerModal.value = true
-                }) {
-                    Image(
-                        painter = painterResource(R.drawable.baseline_alarm_24),
-                        colorFilter = ColorFilter.tint(color = MaterialTheme.colorScheme.primary),
-                        contentDescription = "Pick Time"
-                    )
-                }
-            }
+                },
+            )
         }
         AddNewTaskSaveButton {
             if (viewModel.addNewTask(context, title, description, dueDate, dueTime)) {
@@ -140,8 +103,7 @@ fun AddNewTaskBody(
                 onConfirm = { time ->
                     viewModel.updateDueTime(
                         (if (time != null) DateUtils().formatTimeToString(
-                            time.hour,
-                            time.minute
+                            time.hour, time.minute
                         ) else DateUtils().formatDateTimeToString(
                             type = DateTimeEnum.Time
                         )).toString()
