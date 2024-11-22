@@ -41,13 +41,19 @@ class AddNewTaskViewModel : ViewModel() {
         _dueTime.value = text
     }
 
-    fun addNewTask(context: Context, title: String, description: String, dueDate: String): Boolean {
+    fun addNewTask(
+        context: Context,
+        title: String,
+        description: String,
+        dueDate: String,
+        dueTime: String
+    ): Boolean {
         val task: Task = Task(
             id = taskList.size + 1,
             title = title,
             description = description,
             createdAt = DateUtils().formatDateTimeToString(),
-            dueDate = dueDate
+            dueDate = "$dueDate $dueTime"
         )
 
         try {

@@ -117,7 +117,7 @@ fun AddNewTaskBody(
             }
         }
         AddNewTaskSaveButton {
-            if (viewModel.addNewTask(context, title, description, dueDate)) {
+            if (viewModel.addNewTask(context, title, description, dueDate, dueTime)) {
                 navController?.navigateUp()
             }
         }
