@@ -19,6 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import org.harundemir.taskmanager.core.services.TaskReminderNotification
 import org.harundemir.taskmanager.core.util.DateTimeEnum
 import org.harundemir.taskmanager.core.util.DateUtils
 import org.harundemir.taskmanager.features.addNewTask.viewmodels.AddNewTaskViewModel
@@ -84,6 +85,7 @@ fun AddNewTaskBody(
         AddNewTaskSaveButton {
             if (viewModel.addNewTask(context, title, description, dueDate, dueTime)) {
                 navController?.navigateUp()
+                TaskReminderNotification(context = context).showNotification(title)
             }
         }
         if (openDatePickerModal.value) {
