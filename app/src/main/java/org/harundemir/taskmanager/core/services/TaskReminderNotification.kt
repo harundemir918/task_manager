@@ -23,11 +23,13 @@ class TaskReminderNotification(
         notificationManager.createNotificationChannel(channel)
     }
 
-    fun showNotification(title: String) {
+    fun showNotification(title: String, message: String) {
         var builder = NotificationCompat.Builder(context, "task_reminder_notification")
             .setSmallIcon(R.drawable.baseline_alarm_24)
             .setContentTitle("Task Reminder")
             .setContentText("This is your task: $title")
+            .setStyle(NotificationCompat.BigTextStyle()
+            .bigText("Task: $title\nDescription:$message"))
             .setPriority(NotificationCompat.PRIORITY_HIGH)
         notificationManager.notify(1, builder.build())
     }

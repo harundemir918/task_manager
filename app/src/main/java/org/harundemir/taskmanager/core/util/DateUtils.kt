@@ -39,4 +39,15 @@ class DateUtils {
         }
         return formatter.format(Date(millis))
     }
+
+    fun convertToTimestamp(dateTime: String): Long? {
+        return try {
+            val formatter = SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.getDefault())
+            val date = formatter.parse(dateTime)
+            date?.time
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
 }
