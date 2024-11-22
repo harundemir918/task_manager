@@ -26,7 +26,7 @@ class TaskReminderNotification(
     fun showNotification(title: String) {
         var builder = NotificationCompat.Builder(context, "task_reminder_notification")
             .setSmallIcon(R.drawable.baseline_alarm_24)
-            .setContentTitle("Task Manager")
+            .setContentTitle("Task Reminder")
             .setContentText("This is your task: $title")
             .setPriority(NotificationCompat.PRIORITY_HIGH)
         notificationManager.notify(1, builder.build())
