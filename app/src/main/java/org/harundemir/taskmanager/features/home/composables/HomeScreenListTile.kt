@@ -5,6 +5,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -30,6 +31,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import kotlinx.coroutines.delay
 import org.harundemir.taskmanager.core.data.taskList
 import org.harundemir.taskmanager.core.models.Task
@@ -37,7 +39,7 @@ import org.harundemir.taskmanager.features.home.viewmodels.HomeViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreenListTile(task: Task) {
+fun HomeScreenListTile(task: Task, navController: NavController?) {
     val homeViewModel: HomeViewModel = viewModel()
     var isRemoved = remember { mutableStateOf(false) }
     val dismissState = rememberSwipeToDismissBoxState(confirmValueChange = {
@@ -81,7 +83,18 @@ fun HomeScreenListTile(task: Task) {
                         )
                         .fillMaxSize()
                         .background(color = MaterialTheme.colorScheme.surface)
-                        .wrapContentHeight(),
+                        .wrapContentHeight()
+                        .clickable(
+                            enabled = true,
+                            onClick = {
+                                val index = taskList.indexOfFirst { it.id == task.id }
+                                navController?.currentBackStackEntry?.arguments?.putInt(
+                                    "index",
+                                    index
+                                )
+                                navController?.navigate("taskDetail/$index")
+                            }
+                        ),
                 ) {
                     Row(
                         modifier = Modifier

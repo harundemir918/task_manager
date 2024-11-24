@@ -23,7 +23,7 @@ fun HomeScreen(navController: NavController?) {
         floatingActionButton = { HomeScreenAddTaskButton(navController) },
         modifier = Modifier.fillMaxSize()
     ) { innerPadding ->
-        HomeScreenBody(innerPadding = innerPadding)
+        HomeScreenBody(innerPadding = innerPadding, navController = navController)
     }
 }
 
