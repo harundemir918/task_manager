@@ -83,10 +83,12 @@ fun AddNewTaskBody(
             )
         }
         AddNewTaskSaveButton {
-            if (viewModel.addNewTask(context, title, description, dueDate, dueTime)) {
+            val taskId = viewModel.addNewTask(context, title, description, dueDate, dueTime)
+            if (taskId != 0) {
                 navController?.navigateUp()
                 TaskReminderAlarmScheduler().scheduleTaskReminder(
                     context = context,
+                    taskId = taskId,
                     taskTitle = title,
                     taskMessage = description,
                     dueTimeMillis = DateUtils().convertToTimestamp("$dueDate $dueTime")!!

@@ -47,7 +47,7 @@ class AddNewTaskViewModel : ViewModel() {
         description: String,
         dueDate: String,
         dueTime: String
-    ): Boolean {
+    ): Int {
         val task: Task = Task(
             id = taskList.size + 1,
             title = title,
@@ -59,10 +59,10 @@ class AddNewTaskViewModel : ViewModel() {
         try {
             taskList.add(task)
             Toast.makeText(context, "Task added.", Toast.LENGTH_SHORT).show()
-            return true
+            return task.id
         } catch (e: Exception) {
             Toast.makeText(context, "There is an error: $e", Toast.LENGTH_SHORT).show()
-            return false
+            return 0
         }
     }
 }

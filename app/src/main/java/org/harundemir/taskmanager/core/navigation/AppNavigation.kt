@@ -14,9 +14,9 @@ import org.harundemir.taskmanager.features.taskDetail.views.TaskDetailScreen
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
-fun AppNavigation() {
+fun AppNavigation(startDestination: String = "home") {
     val navController = rememberNavController()
-    NavHost(navController, startDestination = "home") {
+    NavHost(navController, startDestination = startDestination) {
         composable("home") {
             HomeScreen(navController)
         }

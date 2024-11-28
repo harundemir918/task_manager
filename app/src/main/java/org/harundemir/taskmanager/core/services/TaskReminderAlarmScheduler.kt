@@ -8,11 +8,12 @@ import android.os.Build
 
 class TaskReminderAlarmScheduler {
     fun scheduleTaskReminder(
-        context: Context, taskTitle: String, taskMessage: String, dueTimeMillis: Long
+        context: Context, taskId: Int, taskTitle: String, taskMessage: String, dueTimeMillis: Long
     ) {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
         val intent = Intent(context, TaskReminderReceiver::class.java).apply {
+            putExtra("taskId", taskId)
             putExtra("taskTitle", taskTitle)
             putExtra("taskMessage", taskMessage)
         }
