@@ -9,14 +9,18 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import org.harundemir.taskmanager.features.addNewTask.views.AddNewTaskScreen
+import org.harundemir.taskmanager.features.auth.views.LoginScreen
 import org.harundemir.taskmanager.features.home.views.HomeScreen
 import org.harundemir.taskmanager.features.taskDetail.views.TaskDetailScreen
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
-fun AppNavigation(startDestination: String = "home") {
+fun AppNavigation(startDestination: String = "login") {
     val navController = rememberNavController()
     NavHost(navController, startDestination = startDestination) {
+        composable("login") {
+            LoginScreen(navController)
+        }
         composable("home") {
             HomeScreen(navController)
         }

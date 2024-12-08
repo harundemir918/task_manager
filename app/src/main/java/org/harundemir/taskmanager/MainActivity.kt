@@ -19,7 +19,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         TaskReminderNotification(context = this).createNotificationChannel()
         requestNotificationPermission()
-        val startDestination = intent?.getStringExtra("destination") ?: "home"
+        val startDestination = intent?.getStringExtra("destination") ?: "login"
         enableEdgeToEdge()
         setContent {
             TaskManagerTheme {
