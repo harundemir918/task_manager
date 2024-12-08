@@ -1,4 +1,4 @@
-package org.harundemir.taskmanager.ui.theme
+package org.harundemir.taskmanager.core.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

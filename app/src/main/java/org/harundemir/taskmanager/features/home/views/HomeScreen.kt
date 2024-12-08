@@ -9,10 +9,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
+import org.harundemir.taskmanager.core.theme.TaskManagerTheme
 import org.harundemir.taskmanager.features.home.composables.HomeScreenAddTaskButton
 import org.harundemir.taskmanager.features.home.composables.HomeScreenAppBar
 import org.harundemir.taskmanager.features.home.composables.HomeScreenBody
-import org.harundemir.taskmanager.ui.theme.TaskManagerTheme
 
 @Composable
 fun HomeScreen(navController: NavController?) {

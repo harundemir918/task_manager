@@ -12,7 +12,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import org.harundemir.taskmanager.core.navigation.AppNavigation
 import org.harundemir.taskmanager.core.services.TaskReminderNotification
-import org.harundemir.taskmanager.ui.theme.TaskManagerTheme
+import org.harundemir.taskmanager.core.theme.TaskManagerTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
